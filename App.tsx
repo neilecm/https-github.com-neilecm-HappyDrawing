@@ -75,7 +75,7 @@ const App: React.FC = () => {
         {/* Left Panel: Toolbar and Image Uploader */}
         <div className="lg:w-1/4 flex flex-col gap-4">
           <header className="text-center lg:text-left">
-            <h1 className="text-3xl font-bold text-cyan-400">Gemini Sketchpad</h1>
+            <h1 className="text-3xl font-bold text-cyan-400">Genesis Sketchpad</h1>
             <p className="text-gray-400 mt-1">Draw or upload an image, then tell AI how to edit it.</p>
           </header>
 
@@ -103,7 +103,7 @@ const App: React.FC = () => {
             {isLoading && (
               <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col justify-center items-center backdrop-blur-sm">
                 <div className="w-16 h-16 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
-                <p className="mt-4 text-lg font-semibold">Gemini is creating...</p>
+                <p className="mt-4 text-lg font-semibold">Genesis is creating...</p>
               </div>
             )}
           </div>
