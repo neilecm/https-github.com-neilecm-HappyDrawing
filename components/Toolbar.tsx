@@ -21,10 +21,10 @@ const ToolButton: React.FC<{
   <button
     aria-label={label}
     onClick={onClick}
-    className={`p-3 rounded-lg transition-all duration-200 ${
+    className={`p-3 rounded-xl transition-all duration-200 ${
       isActive
-        ? 'bg-cyan-500 text-white shadow-lg scale-110'
-        : 'bg-gray-700 hover:bg-gray-600'
+        ? 'bg-indigo-500 text-white shadow-lg scale-110'
+        : 'bg-slate-600 hover:bg-slate-500'
     }`}
   >
     {children}
@@ -93,9 +93,9 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 
 
   return (
-    <div className="bg-gray-800 p-4 rounded-lg shadow-lg border border-gray-700 space-y-4">
+    <div className="bg-slate-700 p-4 rounded-2xl shadow-lg border border-slate-600 space-y-4">
       <div className="space-y-2">
-        <label className="text-sm font-semibold text-gray-400">Tools</label>
+        <label className="text-sm font-semibold text-slate-400">Tools</label>
         <div className="grid grid-cols-2 gap-2">
            <ToolButton label="Pen" isActive={tool === 'pen'} onClick={() => setTool('pen')}>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" /><path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd" /></svg>
@@ -107,10 +107,10 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm font-semibold text-gray-400 flex justify-between items-center">
+        <label className="text-sm font-semibold text-slate-400 flex justify-between items-center">
           <span>Color</span>
           <div 
-            className="w-6 h-6 rounded-full border-2 border-gray-500 shadow-md" 
+            className="w-6 h-6 rounded-full border-2 border-slate-400 shadow-md" 
             style={{ backgroundColor: color }}
             aria-label={`Current color: ${color}`}
           />
@@ -118,7 +118,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         <div
           ref={colorBarRef}
           onClick={handleColorSelect}
-          className={`w-full h-8 rounded-lg border-2 border-transparent ${tool === 'pen' ? 'cursor-pointer hover:border-cyan-400' : 'cursor-not-allowed opacity-50'}`}
+          className={`w-full h-8 rounded-full border-2 border-transparent ${tool === 'pen' ? 'cursor-pointer hover:border-indigo-400' : 'cursor-not-allowed opacity-50'}`}
           style={{ background: 'linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000)' }}
           aria-label="Color spectrum selector"
           role="button"
@@ -128,8 +128,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="line-width" className="text-sm font-semibold text-gray-400">
-          Brush Size: <span className="font-bold text-cyan-400">{lineWidth}</span>
+        <label htmlFor="line-width" className="text-sm font-semibold text-slate-400">
+          Brush Size: <span className="font-bold text-indigo-400">{lineWidth}</span>
         </label>
         <input
           id="line-width"
@@ -138,12 +138,12 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           max="50"
           value={lineWidth}
           onChange={(e) => setLineWidth(Number(e.target.value))}
-          className="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+          className="w-full h-2 bg-slate-600 rounded-lg appearance-none cursor-pointer accent-indigo-500"
           disabled={tool !== 'pen'}
         />
       </div>
       
-      <button onClick={onClear} className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
+      <button onClick={onClear} className="w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-xl transition duration-300 ease-in-out">
         Clear All
       </button>
 

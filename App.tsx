@@ -69,14 +69,16 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 flex flex-col items-center justify-center p-4 font-sans">
+    <div className="min-h-screen bg-slate-800 text-slate-100 flex flex-col items-center justify-center p-4 font-sans">
       <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-4">
         
         {/* Left Panel: Toolbar and Image Uploader */}
         <div className="lg:w-1/4 flex flex-col gap-4">
           <header className="text-center lg:text-left">
-            <h1 className="text-3xl font-bold text-cyan-400">Genesis Sketchpad</h1>
-            <p className="text-gray-400 mt-1">Draw or upload an image, then tell AI how to edit it.</p>
+             <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-400 bg-clip-text text-transparent pb-2">
+              Genesis Sketchpad
+            </h1>
+            <p className="text-slate-400 mt-1">Draw or upload an image, then tell AI how to edit it.</p>
           </header>
 
           <Toolbar
@@ -93,7 +95,7 @@ const App: React.FC = () => {
 
         {/* Right Panel: Canvas and Prompt */}
         <main className="lg:w-3/4 flex flex-col gap-4">
-          <div className="relative aspect-square w-full bg-gray-800 rounded-lg overflow-hidden shadow-2xl border-2 border-gray-700">
+          <div className="relative aspect-square w-full bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border-2 border-slate-700">
             <Canvas
               ref={canvasRef}
               tool={tool}
@@ -103,12 +105,12 @@ const App: React.FC = () => {
             {isLoading && (
               <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col justify-center items-center backdrop-blur-sm">
                 <div className="w-16 h-16 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
-                <p className="mt-4 text-lg font-semibold">Genesis is creating...</p>
+                <p className="mt-4 text-lg font-semibold">Genesis is dreaming up your art...</p>
               </div>
             )}
           </div>
           
-          {error && <div className="bg-red-900 border border-red-700 text-red-200 p-3 rounded-md text-sm">{error}</div>}
+          {error && <div className="bg-pink-800/50 border border-pink-700 text-pink-200 p-3 rounded-xl text-sm">{error}</div>}
 
           <PromptInput
             prompt={prompt}

@@ -44,7 +44,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) =
   };
 
   return (
-    <div className="bg-gray-800 p-4 rounded-lg shadow-lg border border-gray-700">
+    <div className="bg-slate-700 p-4 rounded-2xl shadow-lg border border-slate-600">
       <input
         type="file"
         ref={fileInputRef}
@@ -54,7 +54,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) =
       />
       <button
         onClick={handleClick}
-        className="w-full bg-gray-700 hover:bg-gray-600 text-gray-300 font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out flex items-center justify-center gap-2"
+        className="w-full bg-slate-600 hover:bg-slate-500 text-slate-300 font-bold py-2 px-4 rounded-xl transition duration-300 ease-in-out flex items-center justify-center gap-2"
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
