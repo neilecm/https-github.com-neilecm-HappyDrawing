@@ -1,0 +1,5 @@
+{
+  "name": "Gemini Image Sketchpad",
+  "description": "An interactive sketchpad that allows you to draw, upload images, and use text prompts to edit them with the power of Gemini. Bring your creative ideas to life by adding filters, objects, or completely transforming your visuals.",
+  "requestFramePermissions": []
+}
