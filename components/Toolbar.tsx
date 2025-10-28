@@ -1,7 +1,6 @@
 
-import React from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { type Tool } from '../types';
-import { DEFAULT_COLOR } from '../constants';
 
 interface ToolbarProps {
   tool: Tool;
@@ -42,6 +41,57 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   setLineWidth,
   onClear,
 }) => {
+  const colorBarRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const contextRef = useRef<CanvasRenderingContext2D | null>(null);
+
+  // Helper to convert RGB to Hex
+  const rgbToHex = (r: number, g: number, b: number): string => {
+    return "#" + [r, g, b].map(x => {
+      const hex = x.toString(16);
+      return hex.length === 1 ? '0' + hex : hex;
+    }).join('');
+  };
+
+  // Effect to set up a hidden canvas for color picking from the gradient
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const colorBar = colorBarRef.current;
+    if (canvas && colorBar) {
+      const rect = colorBar.getBoundingClientRect();
+      if (rect.width > 0) {
+        canvas.width = rect.width;
+        canvas.height = 1;
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        if (ctx) {
+          contextRef.current = ctx;
+          const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+          gradient.addColorStop(0, '#ff0000');
+          gradient.addColorStop(0.17, '#ffff00');
+          gradient.addColorStop(0.34, '#00ff00');
+          gradient.addColorStop(0.51, '#00ffff');
+          gradient.addColorStop(0.68, '#0000ff');
+          gradient.addColorStop(0.85, '#ff00ff');
+          gradient.addColorStop(1, '#ff0000');
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+    }
+  }, []);
+
+  const handleColorSelect = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
+    if (tool !== 'pen' || !contextRef.current || !colorBarRef.current) return;
+    
+    const rect = colorBarRef.current.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    
+    const pixel = contextRef.current.getImageData(x, 0, 1, 1).data;
+    const selectedColor = rgbToHex(pixel[0], pixel[1], pixel[2]);
+    setColor(selectedColor);
+  }, [tool, setColor]);
+
+
   return (
     <div className="bg-gray-800 p-4 rounded-lg shadow-lg border border-gray-700 space-y-4">
       <div className="space-y-2">
@@ -57,22 +107,24 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="color-picker" className="text-sm font-semibold text-gray-400">
-          Color
+        <label className="text-sm font-semibold text-gray-400 flex justify-between items-center">
+          <span>Color</span>
+          <div 
+            className="w-6 h-6 rounded-full border-2 border-gray-500 shadow-md" 
+            style={{ backgroundColor: color }}
+            aria-label={`Current color: ${color}`}
+          />
         </label>
-        <div className="relative">
-            <input
-              id="color-picker"
-              type="color"
-              value={color}
-              onChange={(e) => setColor(e.target.value)}
-              className="w-full h-10 p-1 bg-gray-700 border border-gray-600 rounded-lg cursor-pointer"
-              disabled={tool !== 'pen'}
-            />
-             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none" style={{ color: color === DEFAULT_COLOR ? '#9ca3af' : color }}>
-                <div className="w-5 h-5 rounded-full border-2 border-white" style={{ backgroundColor: color }}></div>
-            </div>
-        </div>
+        <div
+          ref={colorBarRef}
+          onClick={handleColorSelect}
+          className={`w-full h-8 rounded-lg border-2 border-transparent ${tool === 'pen' ? 'cursor-pointer hover:border-cyan-400' : 'cursor-not-allowed opacity-50'}`}
+          style={{ background: 'linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000)' }}
+          aria-label="Color spectrum selector"
+          role="button"
+          tabIndex={tool === 'pen' ? 0 : -1}
+        />
+        <canvas ref={canvasRef} style={{ display: 'none' }} />
       </div>
 
       <div className="space-y-2">
